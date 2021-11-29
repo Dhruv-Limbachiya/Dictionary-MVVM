@@ -9,7 +9,7 @@ import com.example.dictionary.data.remote.mapper.WordItemDto
  */
 interface DictionaryApi {
 
-    @GET("/en/{word}")
+    @GET("en/{word}")
     suspend fun searchWord(
         @Path("word") word: String
     ): List<WordItemDto>
