@@ -1,6 +1,6 @@
 package com.example.dictionary.data.remote.mapper
 
-import com.example.dictionary.data.local.WordItemEntity
+import com.example.dictionary.data.local.entities.WordItemEntity
 
 data class WordItemDto(
     val meanings: List<MeaningDto>,

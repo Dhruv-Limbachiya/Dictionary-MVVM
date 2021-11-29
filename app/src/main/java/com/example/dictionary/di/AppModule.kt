@@ -1,11 +1,20 @@
 package com.example.dictionary.di
 
+import android.content.Context
 import android.util.Log
+import androidx.room.Room
 import com.example.dictionary.BuildConfig
+import com.example.dictionary.data.local.db.Converter
+import com.example.dictionary.data.local.db.WordInfoDatabase
+import com.example.dictionary.data.local.util.GsonParser
 import com.example.dictionary.data.remote.DictionaryApi
+import com.example.dictionary.util.Constants
+import com.example.dictionary.util.Constants.NETWORK_READ_TIME_OUT
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,8 +30,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    private const val NETWORK_READ_TIME_OUT = 360
 
     // Network layer dependencies
     @Singleton
@@ -57,4 +64,24 @@ object AppModule {
         }.build().create(DictionaryApi::class.java)
     }
 
+
+    // Database Layer dependencies.
+    @Singleton
+    @Provides
+    fun provideTypeConverter(): Converter {
+        return Converter(GsonParser(Gson()))
+    }
+
+    @Singleton
+    @Provides
+    fun provideWordInfoDatabase(
+        @ApplicationContext context: Context,
+        typeConverter: Converter
+    ): WordInfoDatabase {
+        return Room.databaseBuilder(
+            context,
+            WordInfoDatabase::class.java,
+            Constants.DATABASE_NAME
+        ).addTypeConverter(typeConverter).build()
+    }
 }

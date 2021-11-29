@@ -1,4 +1,4 @@
-package com.example.dictionary.data.local
+package com.example.dictionary.data.local.db
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter

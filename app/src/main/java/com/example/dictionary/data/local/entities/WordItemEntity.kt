@@ -1,4 +1,4 @@
-package com.example.dictionary.data.local
+package com.example.dictionary.data.local.entities
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -13,12 +13,12 @@ import com.example.dictionary.data.remote.mapper.PhoneticDto
 /**
  * Represent an individual record in the database.
  */
-@Entity(tableName = "word")
+@Entity(tableName = "word_entity")
 data class WordItemEntity (
     val meanings: List<Meaning>,
     val origin: String,
     val phonetic: String,
     val word: String,
     @PrimaryKey(autoGenerate = true)
-    val id: String? = null
+    val id: Long? = 0L
 )
