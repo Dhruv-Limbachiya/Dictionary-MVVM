@@ -16,9 +16,25 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var mViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        collectFromFlow()
+    }
+
+    private fun collectFromFlow() {
+        lifecycleScope.launchWhenStarted {
+            mViewModel.wordInfoState.collectLatest {
+
+            }
+
+            mViewModel.uiEvents.collectLatest {
+
+            }
+        }
     }
 }
