@@ -25,9 +25,6 @@ class MainViewModel @Inject constructor(
 
     private var job: Job? = null
 
-    init {
-        searchWord("bank")
-    }
 
     /**
      * Method responsible for getting word info or list of word info either from the network or local database and set data in state flow.
@@ -43,10 +40,10 @@ class MainViewModel @Inject constructor(
                     }
                     is Resource.Success -> {
                         // update the state with data list and disable the loading state.
-                        _wordsInfoState.value = _wordsInfoState.value.copy(wordsInfo = result.data,isLoading = false)
+                        _wordsInfoState.value = _wordsInfoState.value.copy(wordsInfo = result.data ?: emptyList(),isLoading = false)
                     }
                     is Resource.Error -> {
-                        _wordsInfoState.value = _wordsInfoState.value.copy(wordsInfo = result.data ?: emptyList(),isLoading = false)
+                        _wordsInfoState.value = _wordsInfoState.value.copy(wordsInfo = emptyList(),isLoading = false)
                         _uiEvents.emit(UIEvent.SnackBarEvent(result.message))
                     }
                 }

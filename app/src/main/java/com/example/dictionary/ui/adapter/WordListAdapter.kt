@@ -101,6 +101,9 @@ class WordListAdapter :
         @RequiresApi(Build.VERSION_CODES.M)
         fun bind(word: WordItemEntity) {
             binding.word = word
+
+            binding.dynamicLayout.removeAllViews()
+
             // For each word
             word.meanings.forEachIndexed { i, meaning ->
                 // For each meaning

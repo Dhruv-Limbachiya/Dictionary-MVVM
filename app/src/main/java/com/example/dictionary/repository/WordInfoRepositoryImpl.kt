@@ -1,11 +1,9 @@
 package com.example.dictionary.repository
 
-import android.util.Log
-import com.example.dictionary.data.local.dao.WordInfoDao
 import com.example.dictionary.data.local.db.WordInfoDatabase
+import com.example.dictionary.data.local.entities.WordItemEntity
 import com.example.dictionary.data.remote.DictionaryApi
 import com.example.dictionary.util.Resource
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
@@ -14,7 +12,7 @@ import javax.inject.Inject
 /**
  * Created By Dhruv Limbachiya on 30-11-2021 11:23 AM.
  */
-class WordInfoRepositoryImpl  @Inject constructor(
+class WordInfoRepositoryImpl @Inject constructor(
     private val api: DictionaryApi,
     private val database: WordInfoDatabase
 ) : WordInfoRepository {
@@ -23,6 +21,11 @@ class WordInfoRepositoryImpl  @Inject constructor(
         emit(Resource.Loading())
 
         // Get the word info or list of word info if the specified word contains in the database.
+        if(word.isBlank()) {
+            emit(Resource.Success(emptyList()))
+            return@flow
+        }
+
         val localWordsInfo = database.wordInfoDao.getWords(word)
 
         if (localWordsInfo?.isNotEmpty() == true) {
@@ -37,12 +40,12 @@ class WordInfoRepositoryImpl  @Inject constructor(
                 // Emit the words info
                 emit(Resource.Success(apiWordsInfo))
             } catch (e: HttpException) {
-                emit(Resource.Error("Oops,something went wrong!", localWordsInfo))
+                emit(Resource.Error("Oops,something went wrong!", emptyList<WordItemEntity>()))
             } catch (e: IOException) {
                 emit(
                     Resource.Error(
                         "Couldn't reach the server.Check your internet connection",
-                        localWordsInfo
+                        emptyList<WordItemEntity>()
                     )
                 )
             }

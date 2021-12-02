@@ -2,6 +2,7 @@ package com.example.dictionary.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.dictionary.R
@@ -25,20 +26,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mAdapter = WordListAdapter()
-
         collectFromFlow()
+
+        mBinding.etSearch.doOnTextChanged { text, start, before, count ->
+            mViewModel.searchWord(text.toString())
+        }
     }
 
     private fun collectFromFlow() {
         lifecycleScope.launchWhenStarted {
             mViewModel.wordInfoState.collect {
-                if(it.wordsInfo?.isNotEmpty() == true){
-                    mAdapter.submitList(it.wordsInfo)
-                    mBinding.rvWords.adapter = mAdapter
-                }
+                mAdapter.submitList(it.wordsInfo ?: emptyList())
+                mBinding.rvWords.adapter = mAdapter
             }
 
             mViewModel.uiEvents.collectLatest {
