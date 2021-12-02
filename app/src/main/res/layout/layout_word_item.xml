@@ -1,50 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true"
-    app:contentPadding="16dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="word"
+            type="com.example.dictionary.data.local.entities.WordItemEntity" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_word"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            tools:text="bank" />
-
-        <TextView
-            android:id="@+id/tv_phonetic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            android:textSize="18sp"
-            tools:text="baŋk" />
-
-        <TextView
-            android:id="@+id/tv_origin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:includeFontPadding="false"
-            android:textSize="18sp"
-            tools:text="Middle English: from Old Norse bakki, of Germanic origin; related to bench. The senses ‘set of things in rows’ and ‘tier of oars’ are from French banc, of the same ultimate origin." />
+        android:layout_marginTop="8dp"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="true"
+        app:contentPadding="14dp">
 
         <LinearLayout
-            android:id="@+id/dynamic_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_word"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:includeFontPadding="false"
+                android:text="@{word.word}"
+                tools:text="bank" />
 
-</com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tv_phonetic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:textSize="18sp"
+                android:text="@{word.phonetic}"
+                tools:text="baŋk" />
+
+            <TextView
+                android:id="@+id/tv_origin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:includeFontPadding="false"
+                android:textSize="18sp"
+                android:text="@{word.origin}"
+                tools:text="Middle English: from Old Norse bakki, of Germanic origin; related to bench. The senses ‘set of things in rows’ and ‘tier of oars’ are from French banc, of the same ultimate origin." />
+
+            <LinearLayout
+                android:id="@+id/dynamic_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>

@@ -1,4 +1,4 @@
-package com.example.dictionary.ui
+package com.example.dictionary.ui.activity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -25,12 +25,16 @@ class MainViewModel @Inject constructor(
 
     private var job: Job? = null
 
+    init {
+        searchWord("bank")
+    }
+
     /**
      * Method responsible for getting word info or list of word info either from the network or local database and set data in state flow.
      */
     fun searchWord(query: String) {
         job?.cancel()
-        job = viewModelScope.launch {
+        job = viewModelScope.launch(Dispatchers.IO) {
             delay(500)
             repository.getWordInfo(query).onEach { result ->
                 when(result) {

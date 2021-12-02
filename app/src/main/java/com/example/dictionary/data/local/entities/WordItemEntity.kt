@@ -20,5 +20,5 @@ data class WordItemEntity (
     val phonetic: String,
     val word: String,
     @PrimaryKey(autoGenerate = true)
-    val id: Long? = 0L
+    val id: Long? = null
 )

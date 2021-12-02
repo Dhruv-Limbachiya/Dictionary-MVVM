@@ -25,7 +25,7 @@ class WordInfoRepositoryImpl  @Inject constructor(
         // Get the word info or list of word info if the specified word contains in the database.
         val localWordsInfo = database.wordInfoDao.getWords(word)
 
-        if (localWordsInfo.isNotEmpty()) {
+        if (localWordsInfo?.isNotEmpty() == true) {
             emit(Resource.Success(localWordsInfo))
         } else {
             try {

@@ -21,6 +21,10 @@ android {
         buildConfigField("String","DICTIONARY_BASE_URL",DICTIONARY_BASE_URL)
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false

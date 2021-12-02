@@ -1,4 +1,4 @@
-package com.example.dictionary.ui
+package com.example.dictionary.ui.activity
 
 import com.example.dictionary.data.local.entities.WordItemEntity
 

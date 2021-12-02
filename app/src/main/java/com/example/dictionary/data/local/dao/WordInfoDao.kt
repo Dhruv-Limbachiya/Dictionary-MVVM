@@ -13,11 +13,11 @@ import com.example.dictionary.data.local.entities.WordItemEntity
 @Dao
 interface WordInfoDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     suspend fun insertWords(words: List<WordItemEntity>)
 
     @Query("SELECT * FROM word_entity WHERE word LIKE '%' || :word || '%' ")  // "SELECT * FROM word_entity where word LIKE '%word%' "
-    fun getWords(word: String): List<WordItemEntity>
+    fun getWords(word: String): List<WordItemEntity>?
 
     /**
      * Deletes the list of word when particular word of word_entity matches with the values(words) passed in the IN() condition/operator.
