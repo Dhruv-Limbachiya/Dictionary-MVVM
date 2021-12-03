@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Collects the emission from the flows.
+     */
     private fun collectFromFlow() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

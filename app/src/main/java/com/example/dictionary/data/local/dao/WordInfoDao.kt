@@ -13,10 +13,17 @@ import com.example.dictionary.data.local.entities.WordItemEntity
 @Dao
 interface WordInfoDao {
 
+    /**
+     * Insert list of words into the database.
+     */
     @Insert
     suspend fun insertWords(words: List<WordItemEntity>)
 
-    @Query("SELECT * FROM word_entity WHERE word LIKE '%' || :word || '%' ")  // "SELECT * FROM word_entity where word LIKE '%word%' "
+    /**
+     * Query to fetch all the words which matches with specified word.
+     * "SELECT * FROM word_entity where word LIKE '%word%' "
+     */
+    @Query("SELECT * FROM word_entity WHERE word LIKE '%' || :word || '%' ")
     fun getWords(word: String): List<WordItemEntity>?
 
     /**

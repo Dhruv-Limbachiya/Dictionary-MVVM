@@ -17,17 +17,25 @@ class WordInfoRepositoryImpl @Inject constructor(
     private val database: WordInfoDatabase
 ) : WordInfoRepository {
 
+    /**
+     * Method is responsible for retrieving word or list of words info either from the database or from the remote API.
+     */
     override fun getWordInfo(word: String) = flow {
         emit(Resource.Loading())
 
-        if(word.isBlank()) {
+        // If user input is blank("") then simply return an emptyList.
+        if (word.isBlank()) {
             emit(Resource.Success(emptyList()))
             return@flow
         }
 
-        // Get the word info or list of word info if the specified word contains in the database.
+        // Get the word info about the specified word from the db.
         val localWordsInfo = database.wordInfoDao.getWords(word)
 
+        /**
+         * if user entered word is already present in db then emit that words with its details.
+         * else make call to api to get the words details from the server.
+         */
         if (localWordsInfo?.isNotEmpty() == true) {
             emit(Resource.Success(localWordsInfo))
         } else {
