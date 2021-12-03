@@ -25,7 +25,6 @@ class WordListAdapter :
     var definitionIds = mutableListOf<String>()
     var exampleIds = mutableListOf<String>()
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordListViewHolder {
 
@@ -34,8 +33,6 @@ class WordListAdapter :
             parent,
             false
         )
-
-
 
         return WordListViewHolder(binding, partOfSpeechIds, definitionIds, exampleIds)
     }

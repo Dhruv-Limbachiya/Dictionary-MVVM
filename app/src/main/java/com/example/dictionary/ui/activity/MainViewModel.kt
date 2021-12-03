@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(
     val wordInfoState: StateFlow<WordInfoState> = _wordsInfoState
 
     private var _uiEvents = MutableSharedFlow<UIEvent>()
-    val uiEvents: SharedFlow<UIEvent> = _uiEvents
+    val uiEvents: SharedFlow<UIEvent> = _uiEvents.asSharedFlow()
 
     private var job: Job? = null
 
@@ -44,14 +44,17 @@ class MainViewModel @Inject constructor(
                     }
                     is Resource.Error -> {
                         _wordsInfoState.value = _wordsInfoState.value.copy(wordsInfo = emptyList(),isLoading = false)
-                        _uiEvents.emit(UIEvent.SnackBarEvent(result.message))
+                        _uiEvents.emit(UIEvent.SnackBarEvent(result.message.toString()))
                     }
                 }
             }.launchIn(this)
         }
     }
 
+    /**
+     * Sealed class for UI Events.
+     */
     sealed class UIEvent() {
-        data class SnackBarEvent(var message: String? = null) : UIEvent()
+        data class SnackBarEvent(var message: String) : UIEvent()
     }
 }

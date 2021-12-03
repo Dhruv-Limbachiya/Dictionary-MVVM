@@ -20,12 +20,12 @@ class WordInfoRepositoryImpl @Inject constructor(
     override fun getWordInfo(word: String) = flow {
         emit(Resource.Loading())
 
-        // Get the word info or list of word info if the specified word contains in the database.
         if(word.isBlank()) {
             emit(Resource.Success(emptyList()))
             return@flow
         }
 
+        // Get the word info or list of word info if the specified word contains in the database.
         val localWordsInfo = database.wordInfoDao.getWords(word)
 
         if (localWordsInfo?.isNotEmpty() == true) {

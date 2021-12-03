@@ -10,6 +10,7 @@ import com.example.dictionary.data.local.util.GsonParser
 import com.example.dictionary.data.remote.DictionaryApi
 import com.example.dictionary.repository.WordInfoRepository
 import com.example.dictionary.repository.WordInfoRepositoryImpl
+import com.example.dictionary.ui.adapter.WordListAdapter
 import com.example.dictionary.util.Constants
 import com.example.dictionary.util.Constants.NETWORK_READ_TIME_OUT
 import com.google.gson.Gson
@@ -98,4 +99,8 @@ object AppModule {
             database
         )
     }
+
+    @Singleton
+    @Provides
+    fun provideWordListAdapter() = WordListAdapter()
 }
