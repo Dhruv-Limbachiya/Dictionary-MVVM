@@ -2,6 +2,7 @@ package com.example.dictionary.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mViewModel.wordInfoState.collect {
+                    mBinding.progressBar.isVisible = it.isLoading
                     mAdapter.submitList(it.wordsInfo ?: emptyList())
                     mBinding.rvWords.adapter = mAdapter
                 }
